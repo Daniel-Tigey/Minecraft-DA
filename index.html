@@ -15,12 +15,12 @@
 
         /* 页面主体样式：空白背景，占满整个视口 */
         body {
-            background-color: #ffffff; /* 纯白背景，可改为transparent透明 */
+            background-color: #262423; 
             min-height: 100vh; /* 占满屏幕高度 */
             display: flex; /* 弹性布局实现居中 */
             justify-content: center; /* 水平居中 */
             align-items: flex-start; /* 垂直方向靠上（基础） */
-            padding-top: 10%; /* 偏上的核心控制，可调整百分比/像素值 */
+            padding-top: 25%; /* 偏上的核心控制，可调整百分比/像素值 */
             overflow: hidden; /* 隐藏多余滚动条 */
         }
 
@@ -29,6 +29,8 @@
             max-width: 80%; /* 图片最大宽度占视口80%，可调整 */
             max-height: 60vh; /* 图片最大高度占视口60%，可调整 */
             object-fit: contain; /* 保持图片比例 */
+            transform: scale(1.5); /* 放大1.5倍 */
+            transform-origin: center top;
         }
     </style>
 </head>
