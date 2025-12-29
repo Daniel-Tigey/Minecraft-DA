@@ -15,7 +15,7 @@
 
         /* 页面主体样式：空白背景，占满整个视口 */
         body {
-            background-color: #262423; 
+            background-color: #255025; 
             min-height: 100vh; /* 占满屏幕高度 */
             display: flex; /* 弹性布局实现居中 */
             justify-content: center; /* 水平居中 */
@@ -32,9 +32,20 @@
             transform: scale(1.5); /* 放大1.5倍 */
             transform-origin: center top;
         }
+
+        .center-text {
+            font-size: 24px; /* 字体大小 */
+            color: #bbb; /* 字体颜色 */
+            font-family: "Minecraft", monospace; /* 可选：匹配游戏字体 */
+            text-align: center; /* 文本自身居中（应对多行） */
+        }
     </style>
 </head>
 <body>
     <img src="Minecraft_title.png" alt="title" class="center-img">
+    <div class="center-text">
+        Minecraft - DA<br>
+        让你免费畅玩Minecraft Java版的内容
+    </div>
 </body>
 </html>
