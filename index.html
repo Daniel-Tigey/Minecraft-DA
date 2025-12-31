@@ -2,7 +2,6 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <!-- 适配移动端 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minecraft - DA</title>
     <style>
@@ -15,34 +14,86 @@
 
         /* 页面主体样式：灰蓝背景，占满整个视口 */
         body {
-            background-color: #4a5c6b; /* 灰蓝色（可按需微调） */
-            min-height: 100vh; /* 占满屏幕高度 */
+            background-color: #4a5c6b; /* 灰蓝色 */
+            min-height: 100vh;
             display: flex; 
-            flex-direction: column; /* 改为垂直列布局，让图片+文本上下排列 */
-            justify-content: flex-start; /* 整体垂直偏上 */
+            flex-direction: column; /* 垂直列布局 */
+            justify-content: flex-start; /* 整体偏上 */
             align-items: center; /* 水平居中 */
-            padding-top: 5%; /* 偏上的核心控制 */
-            overflow: hidden; /* 隐藏多余滚动条 */
-            gap: 30px; /* 图片和文本之间的间距（可选，优化美观） */
+            padding: 5% 20px 40px; /* 上下内边距，左右留边适配移动端 */
+            overflow-x: hidden; /* 仅隐藏水平滚动条，允许垂直滚动 */
+            gap: 30px; /* 元素间距 */
         }
 
-        /* 图片样式：自适应缩放，防止溢出 */
+        /* 图片样式：自适应缩放 */
         .center-img {
-            max-width: 80%; /* 图片最大宽度占视口80% */
-            max-height: 60vh; /* 图片最大高度占视口60% */
-            object-fit: contain; /* 保持图片比例 */
-            transform: scale(1.5); /* 放大1.5倍 */
+            max-width: 80%;
+            max-height: 60vh;
+            object-fit: contain;
+            transform: scale(1.5);
             transform-origin: center top;
         }
 
+        /* 标题文本样式 */
         .center-text {
-            font-size: 24px; /* 字体大小 */
-            color: #bbb; /* 字体颜色 */
-            font-family: "Minecraft", monospace; /* 匹配游戏字体 */
-            text-align: center; /* 文本自身居中（应对多行） */
+            font-size: 24px;
+            color: #bbb;
+            font-family: "Minecraft", monospace;
+            text-align: center;
         }
 
-        /* 可选：引入Minecraft官方字体（让字体更贴合游戏风格） */
+        /* 卡片容器：实现三个卡片并列 */
+        .cards-container {
+            display: flex;
+            justify-content: center;
+            align-items: stretch; /* 卡片高度统一 */
+            gap: 20px; /* 卡片之间的间距 */
+            width: 100%;
+            max-width: 900px; /* 限制最大宽度，避免移动端太宽 */
+            flex-wrap: wrap; /* 移动端自动换行 */
+        }
+
+        /* 单个卡片样式 */
+        .version-card {
+            flex: 1; /* 平分宽度 */
+            min-width: 250px; /* 移动端最小宽度，避免挤太窄 */
+            background-color: #1a1a1a; /* 黑色背景（偏深灰，更柔和） */
+            border-radius: 8px; /* 轻微圆角，优化视觉 */
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px; /* 卡片内图片和文字间距 */
+            text-decoration: none; /* 去除链接下划线 */
+            transition: transform 0.2s ease; /* 点击hover动画 */
+            border: 2px solid #333; /* 边框增强质感 */
+        }
+
+        /* 卡片hover效果（可选，提升交互） */
+        .version-card:hover {
+            transform: translateY(-5px);
+            border-color: #555;
+        }
+
+        /* 卡片内图片样式 */
+        .card-img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain; /* 保持图片比例 */
+            background-color: #333; /* 图片背景，避免透明图突兀 */
+            border-radius: 4px;
+            padding: 10px;
+        }
+
+        /* 卡片内文字样式 */
+        .card-text {
+            font-size: 18px;
+            color: #eee;
+            font-family: "Minecraft", monospace;
+            text-align: center;
+        }
+
+        /* 引入Minecraft官方字体 */
         @font-face {
             font-family: "Minecraft";
             src: url("https://static.wikia.nocookie.net/minecraft/images/7/71/Minecraft.ttf") format("truetype");
@@ -50,10 +101,34 @@
     </style>
 </head>
 <body>
-    <img src="Minecraft_title.png" alt="title" class="center-img">
+    <!-- 标题图片 -->
+    <img src="Minecraft_title.png" alt="Minecraft标题" class="center-img">
+
+    <!-- 标题文本 -->
     <div class="center-text">
         Minecraft - DA<br>
         让你免费畅玩Minecraft Java版的内容
+    </div>
+
+    <!-- 版本卡片容器 -->
+    <div class="cards-container">
+        <!-- 卡片1：Java 1.8.8 -->
+        <a href="java1.8.html" class="version-card" target="_blank">
+            <img src="card1.png" alt="Java 1.8.8" class="card-img">
+            <div class="card-text">Java 1.8.8</div>
+        </a>
+
+        <!-- 卡片2：Java 1.8.8(plus) -->
+        <a href="java1.8plus.html" class="version-card" target="_blank">
+            <img src="card2.png" alt="Java 1.8.8(plus)" class="card-img">
+            <div class="card-text">Java 1.8.8(plus)</div>
+        </a>
+
+        <!-- 卡片3：Java 1.12 Beta -->
+        <a href="java1.12.html" class="version-card" target="_blank">
+            <img src="card3.png" alt="Java 1.12 Beta" class="card-img">
+            <div class="card-text">Java 1.12 Beta</div>
+        </a>
     </div>
 </body>
 </html>
