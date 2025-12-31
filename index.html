@@ -49,21 +49,23 @@
             align-items: stretch; /* 卡片高度统一 */
             gap: 20px; /* 卡片之间的间距 */
             width: 100%;
-            max-width: 900px; /* 限制最大宽度，避免移动端太宽 */
+            max-width: 1000px; /* 放宽最大宽度，适配更大卡片 */
             flex-wrap: wrap; /* 移动端自动换行 */
         }
 
-        /* 单个卡片样式 */
+        /* 单个卡片样式（放大尺寸） */
         .version-card {
             flex: 1; /* 平分宽度 */
-            min-width: 250px; /* 移动端最小宽度，避免挤太窄 */
+            min-width: 300px; /* 放大最小宽度 */
+            height: 350px; /* 固定卡片高度（核心放大点） */
             background-color: #1a1a1a; /* 黑色背景（偏深灰，更柔和） */
             border-radius: 8px; /* 轻微圆角，优化视觉 */
-            padding: 20px;
+            padding: 30px 20px; /* 增加内边距，放大整体 */
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 15px; /* 卡片内图片和文字间距 */
+            justify-content: center; /* 内容垂直居中 */
+            gap: 25px; /* 增加卡片内图片和文字间距 */
             text-decoration: none; /* 去除链接下划线 */
             transition: transform 0.2s ease; /* 点击hover动画 */
             border: 2px solid #333; /* 边框增强质感 */
@@ -75,19 +77,19 @@
             border-color: #555;
         }
 
-        /* 卡片内图片样式 */
+        /* 卡片内图片样式（放大尺寸） */
         .card-img {
-            width: 80px;
-            height: 80px;
+            width: 120px; /* 从80px放大到120px */
+            height: 120px; /* 从80px放大到120px */
             object-fit: contain; /* 保持图片比例 */
             background-color: #333; /* 图片背景，避免透明图突兀 */
-            border-radius: 4px;
-            padding: 10px;
+            border-radius: 6px; /* 放大圆角适配尺寸 */
+            padding: 15px; /* 增加内边距，放大图片显示区域 */
         }
 
-        /* 卡片内文字样式 */
+        /* 卡片内文字样式（微调字号适配大卡片） */
         .card-text {
-            font-size: 18px;
+            font-size: 22px; /* 从18px放大到22px */
             color: #eee;
             font-family: "Minecraft", monospace;
             text-align: center;
@@ -98,9 +100,92 @@
             font-family: "Minecraft";
             src: url("https://static.wikia.nocookie.net/minecraft/images/7/71/Minecraft.ttf") format("truetype");
         }
+
+        /* ========== 弹窗样式 ========== */
+        /* 弹窗遮罩层：覆盖整个页面，半透明黑 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.7); /* 半透明黑色遮罩 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999; /* 置顶显示，覆盖所有内容 */
+        }
+
+        /* 弹窗主体：黑色背景，Minecraft风格 */
+        .modal-box {
+            background-color: #1a1a1a;
+            width: 90%;
+            max-width: 500px; /* 限制弹窗最大宽度 */
+            border-radius: 8px;
+            border: 2px solid #333;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            font-family: "Minecraft", monospace;
+        }
+
+        /* 弹窗标题 */
+        .modal-title {
+            font-size: 24px;
+            color: #eee;
+            text-align: center;
+            font-weight: bold;
+            border-bottom: 1px solid #444;
+            padding-bottom: 10px;
+        }
+
+        /* 弹窗文本 */
+        .modal-content {
+            font-size: 18px;
+            color: #bbb;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        /* 确定按钮 */
+        .modal-btn {
+            background-color: #4a5c6b; /* 匹配页面灰蓝色 */
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 12px 20px;
+            font-size: 18px;
+            font-family: "Minecraft", monospace;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            width: 100%;
+            max-width: 200px;
+            margin: 0 auto; /* 按钮居中 */
+        }
+
+        .modal-btn:hover {
+            background-color: #384855; /* 深色hover效果 */
+        }
+
+        /* 弹窗隐藏状态（点击确定后添加） */
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
+    <!-- ========== 弹窗部分 ========== -->
+    <div class="modal-overlay" id="declarationModal">
+        <div class="modal-box">
+            <div class="modal-title">声明</div>
+            <div class="modal-content">
+                声明文本 <!-- 你可自行修改这里的内容 -->
+            </div>
+            <button class="modal-btn" id="confirmBtn">确定</button>
+        </div>
+    </div>
+
     <!-- 标题图片 -->
     <img src="Minecraft_title.png" alt="Minecraft标题" class="center-img">
 
@@ -130,5 +215,24 @@
             <div class="card-text">Java 1.12 Beta</div>
         </a>
     </div>
+
+    <!-- ========== 弹窗关闭逻辑 ========== -->
+    <script>
+        // 获取弹窗和按钮元素
+        const modal = document.getElementById('declarationModal');
+        const confirmBtn = document.getElementById('confirmBtn');
+
+        // 点击确定按钮关闭弹窗
+        confirmBtn.addEventListener('click', () => {
+            modal.classList.add('hidden');
+        });
+
+        // 可选：点击遮罩层关闭弹窗（取消注释启用）
+        // modal.addEventListener('click', (e) => {
+        //     if (e.target === modal) {
+        //         modal.classList.add('hidden');
+        //     }
+        // });
+    </script>
 </body>
 </html>
