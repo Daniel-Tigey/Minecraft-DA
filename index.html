@@ -42,14 +42,14 @@
             text-align: center;
         }
 
-        /* 卡片容器：实现三个卡片并列 */
+        /* 卡片容器：实现四个卡片并列 */
         .cards-container {
             display: flex;
             justify-content: center;
             align-items: stretch; /* 卡片高度统一 */
             gap: 20px; /* 卡片之间的间距 */
             width: 100%;
-            max-width: 1000px; /* 放宽最大宽度，适配更大卡片 */
+            max-width: 1200px; /* 放宽最大宽度，适配第四个卡片 */
             flex-wrap: wrap; /* 移动端自动换行 */
         }
 
@@ -57,7 +57,7 @@
         .version-card {
             flex: 1; /* 平分宽度 */
             min-width: 300px; /* 放大最小宽度 */
-            height: 350px; /* 固定卡片高度（核心放大点） */
+            height: 400px; /* 增高卡片，适配副文本 */
             background-color: #1a1a1a; /* 黑色背景（偏深灰，更柔和） */
             border-radius: 8px; /* 轻微圆角，优化视觉 */
             padding: 30px 20px; /* 增加内边距，放大整体 */
@@ -65,7 +65,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center; /* 内容垂直居中 */
-            gap: 25px; /* 增加卡片内图片和文字间距 */
+            gap: 20px; /* 调整内间距，适配副文本 */
             text-decoration: none; /* 去除链接下划线 */
             transition: transform 0.2s ease; /* 点击hover动画 */
             border: 2px solid #333; /* 边框增强质感 */
@@ -87,12 +87,22 @@
             padding: 15px; /* 增加内边距，放大图片显示区域 */
         }
 
-        /* 卡片内文字样式（微调字号适配大卡片） */
+        /* 卡片内主文字样式 */
         .card-text {
             font-size: 22px; /* 从18px放大到22px */
             color: #eee;
             font-family: "Minecraft", monospace;
             text-align: center;
+        }
+
+        /* 新增：卡片副文本样式 */
+        .card-subtext {
+            font-size: 16px; /* 比主文本小，突出层级 */
+            color: #999; /* 浅灰色，区分主文本 */
+            font-family: "Minecraft", monospace;
+            text-align: center;
+            line-height: 1.4; /* 优化多行显示 */
+            margin-top: 5px; /* 主副文本间距 */
         }
 
         /* 引入Minecraft官方字体 */
@@ -201,18 +211,28 @@
         <a href="java1.8.html" class="version-card" target="_blank">
             <img src="card1.png" alt="Java 1.8.8" class="card-img">
             <div class="card-text">Java 1.8.8</div>
+            <div class="card-subtext">经典版本，稳定流畅</div> <!-- 新增副文本 -->
         </a>
 
         <!-- 卡片2：Java 1.8.8(plus) -->
         <a href="java1.8plus.html" class="version-card" target="_blank">
             <img src="card2.png" alt="Java 1.8.8(plus)" class="card-img">
             <div class="card-text">Java 1.8.8(plus)</div>
+            <div class="card-subtext">增强版，新增更多特性</div> <!-- 新增副文本 -->
         </a>
 
         <!-- 卡片3：Java 1.12 Beta -->
         <a href="java1.12.html" class="version-card" target="_blank">
             <img src="card3.png" alt="Java 1.12 Beta 名为7891250的种子中的村庄" class="card-img">
             <div class="card-text">Java 1.12 Beta</div>
+            <div class="card-subtext">测试版，体验新内容</div> <!-- 新增副文本 -->
+        </a>
+
+        <!-- 新增卡片4：2D Minecraft -->
+        <a href="2d-mc.html" class="version-card" target="_blank">
+            <img src="card4.png" alt="2D Minecraft" class="card-img">
+            <div class="card-text">2D Minecraft</div>
+            <div class="card-subtext">2D的Minecraft，不改原版自由</div> <!-- 指定副文本 -->
         </a>
     </div>
 
