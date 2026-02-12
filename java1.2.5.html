@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java 1.2.5</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #4a5c6b;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        
+        .header {
+            background-color: #3a4c5b;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #2a3c4b;
+        }
+        
+        .title {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+        }
+        
+        .back-button {
+            background-color: #5a6c7b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        
+        .back-button:hover {
+            background-color: #6a7c8b;
+        }
+        
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+        
+        .iframe-container {
+            flex: 1;
+            border: 2px solid #3a4c5b;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            min-height: 500px;
+        }
+        
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .control-button {
+            background-color: #5a6c7b;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .control-button:hover {
+            background-color: #6a7c8b;
+        }
+        
+        .fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background-color: #4a5c6b;
+        }
+        
+        .fullscreen .iframe-container {
+            height: calc(100vh - 80px);
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 class="title">Java 1.2.5</h1>
+        <button class="back-button" onclick="goBack()">
+            <span>← 返回</span>
+        </button>
+    </div>
+    
+    <div class="content">
+        <div class="iframe-container" id="iframeContainer">
+            <iframe id="gameFrame" src="https://play.mcjs.cc/1.2.5/" title="Java 1.2.5"></iframe>
+        </div>
+        
+        <div class="controls">
+            <button class="control-button" onclick="toggleFullscreen()">
+                <span id="fullscreenText">全屏</span>
+            </button>
+            <button class="control-button" onclick="refreshIframe()">
+                <span>↻ 刷新</span>
+            </button>
+        </div>
+    </div>
+    
+    <script>
+        let isFullscreen = false;
+        
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+        
+        function toggleFullscreen() {
+            const container = document.querySelector('.content');
+            const fullscreenText = document.getElementById('fullscreenText');
+            
+            if (!isFullscreen) {
+                // 进入全屏模式
+                container.classList.add('fullscreen');
+                fullscreenText.textContent = '退出全屏';
+                isFullscreen = true;
+            } else {
+                // 退出全屏模式
+                container.classList.remove('fullscreen');
+                fullscreenText.textContent = '全屏';
+                isFullscreen = false;
+            }
+        }
+        
+        function refreshIframe() {
+            const iframe = document.getElementById('gameFrame');
+            const currentSrc = iframe.src;
+            
+            // 显示加载状态
+            iframe.style.opacity = '0.5';
+            
+            // 重新加载 iframe
+            iframe.src = currentSrc;
+            
+            // 加载完成后恢复透明度
+            iframe.onload = function() {
+                iframe.style.opacity = '1';
+            };
+        }
+        
+        // 监听全屏变化事件
+        document.addEventListener('fullscreenchange', function() {
+            if (!document.fullscreenElement) {
+                // 用户按ESC退出全屏
+                const container = document.querySelector('.content');
+                const fullscreenText = document.getElementById('fullscreenText');
+                container.classList.remove('fullscreen');
+                fullscreenText.textContent = '全屏';
+                isFullscreen = false;
+            }
+        });
+        
+        // 防止页面意外刷新
+        window.addEventListener('beforeunload', function(e) {
+            e.preventDefault();
+            e.returnValue = '确定要离开游戏吗？';
+        });
+    </script>
+</body>
+</html>
