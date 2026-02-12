@@ -23,13 +23,37 @@
             gap: 30px;
         }
 
+        /* 搜索框样式 */
+        .search-container {
+            width: 100%;
+            max-width: 600px;
+            margin-top: 20px;
+        }
+        .search-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #333;
+            border-radius: 8px;
+            background-color: #1a1a1a;
+            color: #eee;
+            font-size: 18px;
+            font-family: "Minecraft", monospace;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+        .search-input::placeholder {
+            color: #999;
+        }
+        .search-input:focus {
+            border-color: #555;
+        }
+
         .center-img {
             max-width: 80%;
             max-height: 60vh;
             object-fit: contain;
             transform: scale(1.5);
             transform-origin: center top;
-            /* 移除灰色背景：删除background-color、padding、border-radius */
         }
 
         .center-text {
@@ -45,14 +69,14 @@
             align-items: stretch;
             gap: 20px;
             width: 100%;
-            max-width: 1800px; /* 加宽适配更多卡片 */
+            max-width: 1800px;
             flex-wrap: wrap;
         }
 
         .version-card {
             flex: 1;
             min-width: 280px;
-            height: 450px;
+            height: 500px; /* 加高卡片适配放大的图片 */
             background-color: #1a1a1a;
             border-radius: 8px;
             padding: 30px 20px;
@@ -64,6 +88,8 @@
             text-decoration: none;
             transition: transform 0.2s ease;
             border: 2px solid #333;
+            /* 搜索隐藏控制 */
+            display: flex;
         }
 
         .version-card:hover {
@@ -71,14 +97,14 @@
             border-color: #555;
         }
 
+        /* 卡片图片放大一倍：width/height从120px改为240px */
         .card-img {
-            width: 120px;
-            height: 120px;
+            width: 240px;
+            height: 240px;
             object-fit: contain;
             background-color: #333;
             border-radius: 6px;
             padding: 15px;
-            /* 图片加载失败占位 */
             color: #fff;
             display: flex;
             justify-content: center;
@@ -165,6 +191,11 @@
         .hidden {
             display: none !important;
         }
+
+        /* 隐藏卡片的样式 */
+        .card-hidden {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
@@ -179,132 +210,173 @@
     </div>
 </div>
 
-<!-- 标题图片：保留onerror占位，但移除背景样式 -->
+<!-- 标题图片 -->
 <img src="Minecraft_title.png" alt="Minecraft标题" class="center-img" onerror="this.src='https://via.placeholder.com/800x200/ffffff00/ffffff?text=Minecraft'">
 
+<!-- 标题文本 -->
 <div class="center-text">
     Minecraft - DA<br>
     让你免费畅玩Minecraft Java版的内容
 </div>
 
-<div class="cards-container">
-    <!-- 按版本从旧到新排序 -->
+<!-- 新增搜索框 -->
+<div class="search-container">
+    <input type="text" class="search-input" id="versionSearch" placeholder="搜索版本（如：1.8.8、wasm、Alpha）...">
+</div>
+
+<!-- 版本卡片容器 -->
+<div class="cards-container" id="cardsContainer">
     <!-- 1.2.5 -->
-    <a href="java1.2.5.html" class="version-card" target="_blank">
-        <img src="card_1.2.5.png" alt="Java 1.2.5" class="card-img" onerror="this.src='https://via.placeholder.com/120x120/333333/ffffff?text=1.2.5'">
+    <a href="java1.2.5.html" class="version-card" data-version="1.2.5 经典怀旧 早期核心玩法" target="_blank">
+        <img src="card_1.2.5.png" alt="Java 1.2.5" class="card-img" onerror="this.src='https://via.placeholder.com/240x240/333333/ffffff?text=1.2.5'">
         <div class="card-text">Java 1.2.5</div>
         <div class="card-subtext">经典怀旧版本，早期核心玩法</div>
     </a>
 
     <!-- 1.2.6 Alpha -->
-    <a href="java1.2.6alpha.html" class="version-card" target="_blank">
-        <img src="card_1.2.6alpha.png" alt="Java 1.2.6 Alpha" class="card-img" onerror="this.src='https://via.placeholder.com/120x120/333333/ffffff?text=1.2.6α'">
+    <a href="java1.2.6alpha.html" class="version-card" data-version="1.2.6 Alpha α测试版 早期开发版本" target="_blank">
+        <img src="card_1.2.6alpha.png" alt="Java 1.2.6 Alpha" class="card-img" onerror="this.src='https://via.placeholder.com/240x240/333333/ffffff?text=1.2.6α'">
         <div class="card-text">Java 1.2.6 Alpha</div>
         <div class="card-subtext">α测试版，体验早期开发版本</div>
     </a>
 
     <!-- 1.3 Beta -->
-    <a href="java1.3beta.html" class="version-card" target="_blank">
-        <img src="card_1.3beta.png" alt="Java 1.3 Beta" class="card-img" onerror="this.src='https://via.placeholder.com/120x120/333333/ffffff?text=1.3β'">
+    <a href="java1.3beta.html" class="version-card" data-version="1.3 Beta β测试版 新增游戏内容" target="_blank">
+        <img src="card_1.3beta.png" alt="Java 1.3 Beta" class="card-img" onerror="this.src='https://via.placeholder.com/240x240/333333/ffffff?text=1.3β'">
         <div class="card-text">Java 1.3 Beta</div>
         <div class="card-subtext">β测试版，新增更多游戏内容</div>
     </a>
 
     <!-- 1.5 -->
-    <a href="java1.5.html" class="version-card" target="_blank">
-        <img src="card1.png" alt="Java 1.5" class="card-img" onerror="this.src='https://via.placeholder.com/120x120/333333/ffffff?text=1.5'">
+    <a href="java1.5.html" class="version-card" data-version="1.5 怀旧 红石系统升级" target="_blank">
+        <img src="card1.png" alt="Java 1.5" class="card-img" onerror="this.src='https://via.placeholder.com/240x240/333333/ffffff?text=1.5'">
         <div class="card-text">Java 1.5</div>
         <div class="card-subtext">怀旧1.5版本，红石系统升级</div>
     </a>
 
     <!-- 1.6 -->
-    <a href="java1.6.html" class="version-card" target="_blank">
-        <img src="card_1.6.png" alt="Java 1.6" class="card-img" onerror="this.src='https://via.placeholder.com/120x120/333333/ffffff?text=1.6'">
+    <a href="java1.6.html" class="version-card" data-version="1.6 马匹更新 玩法丰富" target="_blank">
+        <img src="card_1.6.png" alt="Java 1.6" class="card-img" onerror="this.src='https://via.placeholder.com/240x240/333333/ffffff?text=1.6'">
         <div class="card-text">Java 1.6</div>
         <div class="card-subtext">马匹更新版本，玩法更丰富</div>
     </a>
 
     <!-- 1.7.3 Beta -->
-    <a href="java1.7.3beta.html" class="version-card" target="_blank">
-        <img src="card_1.7.3beta.png" alt="Java 1.7.3 Beta" class="card-img" onerror="this.src='https://via.placeholder.com/120x120/333333/ffffff?text=1.7.3β'">
+    <a href="java1.7.3beta.html" class="version-card" data-version="1.7.3 Beta β测试版 生物群系更新" target="_blank">
+        <img src="card_1.7.3beta.png" alt="Java 1.7.3 Beta" class="card-img" onerror="this.src='https://via.placeholder.com/240x240/333333/ffffff?text=1.7.3β'">
         <div class="card-text">Java 1.7.3 Beta</div>
         <div class="card-subtext">β测试版，生物群系大更新</div>
     </a>
 
     <!-- 1.8.8 -->
-    <a href="java1.8.html" class="version-card" target="_blank">
-        <img src="card1.png" alt="Java 1.8.8" class="card-img" onerror="this.src='https://via.placeholder.com/120x120/333333/ffffff?text=1.8.8'">
+    <a href="java1.8.html" class="version-card" data-version="1.8.8 经典 稳定流畅" target="_blank">
+        <img src="card1.png" alt="Java 1.8.8" class="card-img" onerror="this.src='https://via.placeholder.com/240x240/333333/ffffff?text=1.8.8'">
         <div class="card-text">Java 1.8.8</div>
         <div class="card-subtext">经典1.8.8版本，稳定流畅</div>
     </a>
 
     <!-- 1.8.8(plus) -->
-    <a href="java1.8plus.html" class="version-card" target="_blank">
-        <img src="card2.png" alt="Java 1.8.8(plus)" class="card-img" onerror="this.src='https://via.placeholder.com/120x120/333333/ffffff?text=1.8.8+'">
+    <a href="java1.8plus.html" class="version-card" data-version="1.8.8 plus 增强版 运行速度更快" target="_blank">
+        <img src="card2.png" alt="Java 1.8.8(plus)" class="card-img" onerror="this.src='https://via.placeholder.com/240x240/333333/ffffff?text=1.8.8+'">
         <div class="card-text">Java 1.8.8(plus)</div>
         <div class="card-subtext">增强版，运行速度更快</div>
     </a>
 
     <!-- 1.8.8 wasm -->
-    <a href="java1.8wasm.html" class="version-card" target="_blank">
-        <img src="wasm.png" alt="Java 1.8.8 wasm" class="card-img" onerror="this.src='https://via.placeholder.com/120x120/333333/ffffff?text=1.8.8+wasm'">
+    <a href="java1.8wasm.html" class="version-card" data-version="1.8.8 wasm 快捷 优质体验 PC端" target="_blank">
+        <img src="wasm.png" alt="Java 1.8.8 wasm" class="card-img" onerror="this.src='https://via.placeholder.com/240x240/333333/ffffff?text=1.8.8+wasm'">
         <div class="card-text">Java 1.8.8 wasm</div>
         <div class="card-subtext">1.8.8的wasm版，更快捷但优质的体验。仅支持PC端运行</div>
     </a>
 
-    <!-- 1.12.2 Beta：修改图片为card_1.12beta.png -->
-    <a href="java1.12.html" class="version-card" target="_blank">
-        <img src="card_1.12beta.png" alt="Java 1.12.2 Beta" class="card-img" onerror="this.src='https://via.placeholder.com/120x120/333333/ffffff?text=1.12.2β'">
+    <!-- 1.12.2 Beta -->
+    <a href="java1.12.html" class="version-card" data-version="1.12.2 Beta β测试版 稳定体验" target="_blank">
+        <img src="card_1.12beta.png" alt="Java 1.12.2 Beta" class="card-img" onerror="this.src='https://via.placeholder.com/240x240/333333/ffffff?text=1.12.2β'">
         <div class="card-text">Java 1.12.2 Beta</div>
         <div class="card-subtext">1.12.2测试版，更稳定的体验</div>
     </a>
 
     <!-- 1.12.2 wasm -->
-    <a href="java1.12wasm.html" class="version-card" target="_blank">
-        <img src="wasm_1.12.png" alt="Java 1.12.2 wasm" class="card-img" onerror="this.src='https://via.placeholder.com/120x120/333333/ffffff?text=1.12.2+wasm'">
+    <a href="java1.12wasm.html" class="version-card" data-version="1.12.2 wasm 高效运行 PC端" target="_blank">
+        <img src="wasm_1.12.png" alt="Java 1.12.2 wasm" class="card-img" onerror="this.src='https://via.placeholder.com/240x240/333333/ffffff?text=1.12.2+wasm'">
         <div class="card-text">Java 1.12.2 wasm</div>
         <div class="card-subtext">1.12.2的wasm版，高效运行，仅支持PC端</div>
     </a>
 
     <!-- 2D Minecraft -->
-    <a href="2d-mc.html" class="version-card" target="_blank">
-        <img src="card4.png" alt="2D Minecraft" class="card-img" onerror="this.src='https://via.placeholder.com/120x120/333333/ffffff?text=2D+MC'">
+    <a href="2d-mc.html" class="version-card" data-version="2D Minecraft 2D版 原版自由" target="_blank">
+        <img src="card4.png" alt="2D Minecraft" class="card-img" onerror="this.src='https://via.placeholder.com/240x240/333333/ffffff?text=2D+MC'">
         <div class="card-text">2D Minecraft</div>
         <div class="card-subtext">2D的Minecraft，不改原版自由</div>
     </a>
 
     <!-- Minecraft Wiki百科 -->
-    <a href="mcwiki.html" class="version-card" target="_blank">
-        <img src="card5.png" alt="Minecraft Wiki" class="card-img" onerror="this.src='https://via.placeholder.com/120x120/333333/ffffff?text=Wiki'">
+    <a href="mcwiki.html" class="version-card" data-version="Wiki 百科 查询疑问 Minecraft" target="_blank">
+        <img src="card5.png" alt="Minecraft Wiki" class="card-img" onerror="this.src='https://via.placeholder.com/240x240/333333/ffffff?text=Wiki'">
         <div class="card-text">Minecraft Wiki百科</div>
         <div class="card-subtext">随时查询Minecraft的疑问</div>
     </a>
 </div>
 
 <script>
+    // 弹窗逻辑
     const modal = document.getElementById('declarationModal');
     const confirmBtn = document.getElementById('confirmBtn');
 
-    // 确保弹窗初始显示
     document.addEventListener('DOMContentLoaded', () => {
         modal.classList.remove('hidden');
     });
 
-    // 点击确定关闭弹窗
     confirmBtn.addEventListener('click', () => {
         modal.classList.add('hidden');
     });
 
-    // 点击遮罩层关闭弹窗
     modal.addEventListener('click', (e) => {
         if (e.target === modal) {
             modal.classList.add('hidden');
         }
     });
 
-    // 防止点击弹窗内部关闭
     document.querySelector('.modal-box').addEventListener('click', (e) => {
         e.stopPropagation();
+    });
+
+    // 新增搜索功能逻辑
+    const searchInput = document.getElementById('versionSearch');
+    const cardsContainer = document.getElementById('cardsContainer');
+    const allCards = document.querySelectorAll('.version-card');
+
+    // 实时搜索
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase().trim();
+        
+        // 如果搜索框为空，显示所有卡片
+        if (!searchTerm) {
+            allCards.forEach(card => {
+                card.classList.remove('card-hidden');
+            });
+            return;
+        }
+
+        // 遍历所有卡片，匹配搜索关键词
+        allCards.forEach(card => {
+            const cardData = card.getAttribute('data-version').toLowerCase();
+            if (cardData.includes(searchTerm)) {
+                card.classList.remove('card-hidden'); // 匹配则显示
+            } else {
+                card.classList.add('card-hidden'); // 不匹配则隐藏
+            }
+        });
+    });
+
+    // 按回车键清空搜索框
+    searchInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            this.value = '';
+            allCards.forEach(card => {
+                card.classList.remove('card-hidden');
+            });
+        }
     });
 </script>
 
