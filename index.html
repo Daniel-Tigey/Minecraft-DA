@@ -29,10 +29,7 @@
             object-fit: contain;
             transform: scale(1.5);
             transform-origin: center top;
-            /* 图片加载失败占位 */
-            background-color: #333;
-            padding: 20px;
-            border-radius: 8px;
+            /* 移除灰色背景：删除background-color、padding、border-radius */
         }
 
         .center-text {
@@ -182,7 +179,8 @@
     </div>
 </div>
 
-<img src="Minecraft_title.png" alt="Minecraft标题" class="center-img" onerror="this.src='https://via.placeholder.com/800x200/333333/ffffff?text=Minecraft'">
+<!-- 标题图片：保留onerror占位，但移除背景样式 -->
+<img src="Minecraft_title.png" alt="Minecraft标题" class="center-img" onerror="this.src='https://via.placeholder.com/800x200/ffffff00/ffffff?text=Minecraft'">
 
 <div class="center-text">
     Minecraft - DA<br>
@@ -254,9 +252,9 @@
         <div class="card-subtext">1.8.8的wasm版，更快捷但优质的体验。仅支持PC端运行</div>
     </a>
 
-    <!-- 1.12.2 Beta -->
+    <!-- 1.12.2 Beta：修改图片为card_1.12beta.png -->
     <a href="java1.12.html" class="version-card" target="_blank">
-        <img src="wasm.png" alt="Java 1.12.2 Beta" class="card-img" onerror="this.src='https://via.placeholder.com/120x120/333333/ffffff?text=1.12.2β'">
+        <img src="card_1.12beta.png" alt="Java 1.12.2 Beta" class="card-img" onerror="this.src='https://via.placeholder.com/120x120/333333/ffffff?text=1.12.2β'">
         <div class="card-text">Java 1.12.2 Beta</div>
         <div class="card-subtext">1.12.2测试版，更稳定的体验</div>
     </a>
